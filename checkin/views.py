@@ -2,7 +2,11 @@ from .forms import NameForm, IdForm
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from client_storage import id_storage
+from client_storage import insert
+import mysql.connector.errors
+from mysql.connector.errors import Error
+import MySQLdb
+
 
 def sign_in(request):
 	#we need to handle all the data that was just typed, we'll add a condition for that
@@ -30,13 +34,18 @@ def sign_up(request):
 			post = form.save()
 			post.save()
 			ID = post.id_text
-			if post.id_text in id_storage.clients:
-				messages.add_message(request, messages.INFO, 'That ID is already taken, please try again ')
+			#we'll call an external function that checks membership of the users input in the database
+			try:
+				insert(post.id_text)
+				messages.add_message(request, messages.INFO, 'Thank you for signing up ')
 				return HttpResponseRedirect('sign_up')
-			else:
-				messages.add_message(request, messages.INFO, 'Thank you your ID is ' + post.id_text)
-				id_storage.clients.append(post.id_text)
-				HttpResponseRedirect('sign_in')
+			except:
+				if Error(errno=1062):
+					messages.add_message(request, messages.INFO, "Already taken") 
+					HttpResponseRedirect('sign_in')
+				else:
+					messages.add_message(request, messages.INFO, "Invalid input")
+					HttpResponseRedirect('sign_in')
 		else:
 			return HttpResponse('That text is invalid')
 	else:
