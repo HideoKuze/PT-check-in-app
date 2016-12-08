@@ -1,7 +1,8 @@
 #this will be a test file I will use to update the mySQL data base
 import MySQLdb
 import mysql.connector
-from mysql.connector.errors import Error
+from mysql.connector import errorcode
+from django.contrib import messages
 
 #Use a function to insert new information into the database
 
@@ -18,10 +19,10 @@ def insert(info):
 		cursor.execute(sql)
 		#commit changes to the database
 		db.commit()
-	except mysql.connector.Error as e:
+	except MySQLdb.Error as e:
 		#display the error message MySQL returns to the user
-		return e
-		
-
+		if e[0]
 	#disconnect from server
 	db.close()
+
+insert('2501')

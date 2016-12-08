@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from client_storage import insert
-import mysql.connector.errors
+import mysql.connector
+from mysql.connector import errorcode
 from mysql.connector.errors import Error
 import MySQLdb
 
@@ -40,12 +41,15 @@ def sign_up(request):
 				messages.add_message(request, messages.INFO, 'Thank you for signing up ')
 				return HttpResponseRedirect('sign_up')
 			except:
-				if Error(errno=1062):
+				if MySQLdb.Error(errno=1062):
 					messages.add_message(request, messages.INFO, "Already taken") 
-					HttpResponseRedirect('sign_in')
+					return HttpResponseRedirect('sign_up')
 				else:
 					messages.add_message(request, messages.INFO, "Invalid input")
-					HttpResponseRedirect('sign_in')
+					return HttpResponseRedirect('sign_up')
+
+			# if the user enters a number that is already in use raise an 'duplicate' error
+			# Capture the exception here
 		else:
 			return HttpResponse('That text is invalid')
 	else:
