@@ -18,11 +18,16 @@ def insert(info):
 		#execute the command
 		cursor.execute(sql)
 		#commit changes to the database
+		print 'success'
 		db.commit()
 	except MySQLdb.Error as e:
-		#display the error message MySQL returns to the user
-		if e[0]
+		#return the first element in the tuple that contains the error message, which will be a the errorcode
+		 if e[0] == 1062:
+		 	return e[0]
+		 if e[0] == 1054:
+		 	return e[0]
+
 	#disconnect from server
 	db.close()
 
-insert('2501')
+insert('2503')

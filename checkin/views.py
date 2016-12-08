@@ -36,17 +36,16 @@ def sign_up(request):
 			post.save()
 			ID = post.id_text
 			#we'll call an external function that checks membership of the users input in the database
-			try:
-				insert(post.id_text)
-				messages.add_message(request, messages.INFO, 'Thank you for signing up ')
+			query = insert(post.id_text)
+			if query == 1062:
+				messages.add_message(request, messages.INFO, 'Already taken ')
 				return HttpResponseRedirect('sign_up')
-			except:
-				if MySQLdb.Error(errno=1062):
-					messages.add_message(request, messages.INFO, "Already taken") 
-					return HttpResponseRedirect('sign_up')
-				else:
-					messages.add_message(request, messages.INFO, "Invalid input")
-					return HttpResponseRedirect('sign_up')
+			if query == 1054:
+				messages.add_message(request, messages.INFO, 'Invalid input')
+				return HttpResponseRedirect('sign_up')
+			else:
+				messages.add_message(request, messages.INFO, 'Thank you for signing up!')
+				return HttpResponseRedirect('sign_up')
 
 			# if the user enters a number that is already in use raise an 'duplicate' error
 			# Capture the exception here
@@ -55,3 +54,15 @@ def sign_up(request):
 	else:
 		form = IdForm()
 	return render(request, 'checkin/base.html', {'form': form})
+
+#try:
+				#insert(post.id_text)
+				#messages.add_message(request, messages.INFO, 'Thank you for signing up ')
+				#return HttpResponseRedirect('sign_up')
+			#except insert(post.id_text) as err:
+				#if err[0] == 1062:
+					#messages.add_message(request, messages.INFO, "Already taken") 
+					#return HttpResponseRedirect('sign_up')
+				#else:
+					#messages.add_message(request, messages.INFO, "Invalid input")
+					#return HttpResponseRedirect('sign_up')
