@@ -36,6 +36,7 @@ def sign_up(request):
 			post.save()
 			ID = post.id_text
 			#we'll call an external function that checks membership of the users input in the database
+			# query is the first element 
 			query = insert(post.id_text)
 			if query == 1062:
 				messages.add_message(request, messages.INFO, 'Already taken ')
