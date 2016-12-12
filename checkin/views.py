@@ -38,11 +38,17 @@ def sign_up(request):
 			#we'll call an external function that checks membership of the users input in the database
 			# query is the first element 
 			query = insert(post.id_text)
+			# Error code 1062: https://dev.mysql.com/doc/refman/5.6/en/error-messages-server.html#error_er_dup_entry
 			if query == 1062:
 				messages.add_message(request, messages.INFO, 'Already taken ')
 				return HttpResponseRedirect('sign_up')
+			# Error code 1054: https://dev.mysql.com/doc/refman/5.6/en/error-messages-server.html#error_er_bad_field_error
 			if query == 1054:
 				messages.add_message(request, messages.INFO, 'Invalid input')
+				return HttpResponseRedirect('sign_up')
+			#Error code https://dev.mysql.com/doc/refman/5.6/en/error-messages-server.html#error_er_data_too_long
+			if query == 1406:
+				messages.add_message(request, messages.INFO, 'That ID is too long, please enter one that is 8 digits')
 				return HttpResponseRedirect('sign_up')
 			else:
 				messages.add_message(request, messages.INFO, 'Thank you for signing up!')
@@ -55,15 +61,3 @@ def sign_up(request):
 	else:
 		form = IdForm()
 	return render(request, 'checkin/base.html', {'form': form})
-
-#try:
-				#insert(post.id_text)
-				#messages.add_message(request, messages.INFO, 'Thank you for signing up ')
-				#return HttpResponseRedirect('sign_up')
-			#except insert(post.id_text) as err:
-				#if err[0] == 1062:
-					#messages.add_message(request, messages.INFO, "Already taken") 
-					#return HttpResponseRedirect('sign_up')
-				#else:
-					#messages.add_message(request, messages.INFO, "Invalid input")
-					#return HttpResponseRedirect('sign_up')
