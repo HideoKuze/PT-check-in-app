@@ -8,7 +8,7 @@ from django.contrib import messages
 
 def insert(info):
 	#open a connection
-	db = MySQLdb.connect('localhost','root','gits2501', 'CLIENTS')
+	db = MySQLdb.connect('localhost','root','<password>', 'CLIENTS')
 	#prepare a cursor
 	cursor = db.cursor()
 	#prepare SQL query
