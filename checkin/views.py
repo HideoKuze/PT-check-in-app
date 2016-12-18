@@ -36,7 +36,7 @@ def sign_up(request):
 			post.save()
 			ID = post.id_text
 			#we'll call an external function that checks membership of the users input in the database
-			# query is the first element 
+			# query is the first element returned in the error code
 			query = insert(post.id_text)
 			# Error code 1062: https://dev.mysql.com/doc/refman/5.6/en/error-messages-server.html#error_er_dup_entry
 			if query == 1062:
@@ -48,7 +48,7 @@ def sign_up(request):
 				return HttpResponseRedirect('sign_up')
 			#Error code https://dev.mysql.com/doc/refman/5.6/en/error-messages-server.html#error_er_data_too_long
 			if query == 1406:
-				messages.add_message(request, messages.INFO, 'That ID is too long, please enter one that is 8 digits')
+				messages.add_message(request, messages.INFO, 'That ID is too long, please enter one that is 8 digits or less')
 				return HttpResponseRedirect('sign_up')
 			else:
 				messages.add_message(request, messages.INFO, 'Thank you for signing up!')
