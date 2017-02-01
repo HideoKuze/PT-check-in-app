@@ -10,7 +10,7 @@ class Question(models.Model):
 	question_text = models.CharField("What is your ID?", max_length=100)
 	#pub_date = models.DateTimeField('date published')
 
-	id_text = models.CharField("Enter a new identification number", max_length=200, null=True)
+	id_text = models.CharField("", max_length=200, null=True)
 
 	def __str__(self):
 		return self.question_text 

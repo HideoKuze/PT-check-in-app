@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Example</title>
+
+<!-- CSS -->	
+<style>
+body {
+background-image: url('/pix/samples/bg1.gif');
+}
+
+main {
+margin-bottom: 100%;
+}
+
+.floating-menu {
+font-family: sans-serif;
+background: blue;
+padding: 5px;;
+width: 130px;
+z-index: 100;
+position: fixed;
+bottom: 200px;
+right: 700px;
+}
+
+.floating-menu a, 
+.floating-menu h3 {
+font-size: 0.9em;
+display: block;
+margin: 0 0.5em;
+color: white;
+}
+</style>
+</head>
+<body>
+
+<!-- HTML -->
+<main>
+
+<p>Scroll down and watch the menu remain fixed in the same position, as though it was floating.</p>
+
+<nav class="floating-menu">
+<h3>Floating Menu</h3>
+
+<a href="http://www.quackit.com/css/">CSS</a>
+<a href="http://www.quackit.com/html/">HTML</a>
+<a href="http://www.quackit.com/coldfusion/">ColdFusion</a>
+<a href="http://www.quackit.com/database/">Database</a>
+
+<form method='POST' class= "post-form"> {{ form.as_p }} </form>
+
+</nav>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+.navbar {
+	margin-bottom: 500px; 
+	margin-top: 10px
+}
+
+.sidebar-nav {
+	margin-left:-200px;
+}
+.save-btn-default {
+	position: relative;left:50px;top:-36px;
+}
+
+.post-form {
+	position: relative;right:0px;top:22px;
+}
+
+
+label {
+	position: relative;left:15;top:25px;
+	color: white;
+}
+
+.dufc {
+	position: relative;left:1000px;top:-75px;
+
+}
+
+.messages {
+	color:white;
+	position: relative;left:245px;bottom:45;
+	margin-bottom: -19px;
+}
